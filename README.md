@@ -13,7 +13,7 @@ fund-management-api/
 │   ├── routes.py               # API routes
 │
 ├── db/                         # Database related files
-│   ├── fund_ddl.sql            # Database schema definitions
+│   ├── task4_ddl.sql            # Database schema definitions
 │   └── scripts/                # Database migration scripts
 │       └── output/             # Migration output directory
 │
