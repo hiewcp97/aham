@@ -1,0 +1,154 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Investment Funds API",
+      "description": "API for managing investment funds"
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "paths": {
+      "/funds/list": {
+        "post": {
+          "summary": "Get all funds",
+          "description": "Retrieve a list of all funds with optional filtering and pagination.",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "filters",
+              "description": "Filtering and pagination parameters",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "manager_name": { "type": "string" },
+                  "page": { "type": "integer", "default": 1 },
+                  "per_page": { "type": "integer", "default": 10 }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of funds",
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/definitions/Fund" }
+              }
+            },
+            "400": { "description": "Invalid input" },
+            "500": { "description": "Failed to retrieve funds" }
+          }
+        }
+      },
+      "/funds": {
+        "post": {
+          "summary": "Create a new fund",
+          "description": "Create a new investment fund.",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "fund",
+              "description": "Fund details",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Fund"
+              }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Fund created successfully" },
+            "400": { "description": "Invalid input" },
+            "500": { "description": "Failed to create fund" }
+          }
+        }
+      },
+      "/funds/{fund_id}": {
+        "get": {
+          "summary": "Get fund details",
+          "description": "Retrieve details of a specific fund by its ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "fund_id",
+              "required": true,
+              "type": "string",
+              "description": "ID of the fund"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fund details",
+              "schema": { "$ref": "#/definitions/Fund" }
+            },
+            "404": { "description": "Fund not found" },
+            "500": { "description": "Failed to retrieve fund" }
+          }
+        },
+        "put": {
+          "summary": "Update fund performance",
+          "description": "Update the performance of a specific fund by its ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "fund_id",
+              "required": true,
+              "type": "string",
+              "description": "ID of the fund"
+            },
+            {
+              "in": "body",
+              "name": "performance",
+              "description": "New performance value",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "performance": { "type": "number" }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": { "description": "Fund updated successfully" },
+            "400": { "description": "Invalid input" },
+            "404": { "description": "Fund not found" },
+            "500": { "description": "Failed to update fund" }
+          }
+        },
+        "delete": {
+          "summary": "Delete a fund",
+          "description": "Delete a specific fund by its ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "fund_id",
+              "required": true,
+              "type": "string",
+              "description": "ID of the fund"
+            }
+          ],
+          "responses": {
+            "200": { "description": "Fund deleted successfully" },
+            "404": { "description": "Fund not found" },
+            "500": { "description": "Failed to delete fund" }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Fund": {
+        "type": "object",
+        "properties": {
+          "fund_id": { "type": "string" },
+          "name": { "type": "string" },
+          "manager_name": { "type": "string" },
+          "description": { "type": "string" },
+          "nav": { "type": "number" },
+          "creation_date": { "type": "string", "format": "date" },
+          "performance": { "type": "number" }
+        }
+      }
+    }
+  }

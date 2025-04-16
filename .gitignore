@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+
+# Virtual Environment
+.venv/
+
+# IDE
+.vscode/
+.DS_Store
+
+# Testing
+.coverage
+.pytest_cache/
+
+# Flask
+instance/
+
+# Database
+migrations/
+
+db/scripts/output/*
+
